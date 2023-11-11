@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "ms10-demo1-chart.fullname" . }}
+spec:
+  rules:
+    - host: test.com  # Replace with your domain
+      http:
+        paths:
+          - path: /demo1
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.service.name }}
+                port:
+                  number: {{ .Values.service.port }}
