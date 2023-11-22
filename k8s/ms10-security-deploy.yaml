@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms10-security-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms10-security
+  template:
+    metadata:
+      labels:
+        app: ms10-security
+    spec:
+      containers:
+        - name: ms10-security
+          image: feyziyev007/ms10-sec
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password
+          ports:
+            - containerPort: 8080

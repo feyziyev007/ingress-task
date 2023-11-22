@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-ingress-controller
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-ingress-controller
+  template:
+    metadata:
+      labels:
+        app: nginx-ingress-controller
+    spec:
+      containers:
+        - name: nginx-ingress-controller
+          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.28.0
+          args:
+            - /nginx-ingress-controller
+            - --configmap=default/nginx-configuration
+            - --tcp-services-configmap=default/tcp-services
+            - --udp-services-configmap=default/udp-services
+            - --publish-service=default/ingress-nginx
+            - --annotations-prefix="nginx.ingress.kubernetes.io"
+          ports:
+            - containerPort: 80
