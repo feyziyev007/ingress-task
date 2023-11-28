@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "my-chart.fullname" . }}-adminer-service
+spec:
+  selector:
+    app: {{ include "my-chart.fullname" . }}-adminer
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: {{ .Values.services.ms10demo1.port }}
+      targetPort: {{ .Values.services.ms10demo1.targetPort }}

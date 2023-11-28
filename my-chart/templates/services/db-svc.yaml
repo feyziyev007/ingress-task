@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "my-chart.fullname" . }}-mysql-service
+spec:
+  selector:
+    app: {{ include "my-chart.fullname" . }}-db
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: {{ .Values.services.db.port }}
+      targetPort: {{ .Values.services.db.targetPort }}

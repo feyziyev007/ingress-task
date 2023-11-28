@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my-chart.fullname" . }}-ms10-security-deployment
+spec:
+  replicas: {{ .Values.services.ms10security.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "my-chart.fullname" . }}-ms10-security
+  template:
+    metadata:
+      labels:
+        app: {{ include "my-chart.fullname" . }}-ms10-security
+    spec:
+      containers:
+          - name: {{ include "my-chart.fullname" . }}-ms10-security
+            image: {{ .Values.services.ms10security.image }}
+            env:
+              - name: SPRING_DATASOURCE_URL
+                value: {{ .Values.services.ms10security.datasource.url }}
+              - name: SPRING_DATASOURCE_USERNAME
+                value: {{ .Values.services.ms10security.datasource.username }}
+              - name: SPRING_DATASOURCE_PASSWORD
+                value: {{ .Values.services.ms10security.datasource.password }}
+            ports:
+              - containerPort: {{ .Values.services.ms10security.containerPort }}

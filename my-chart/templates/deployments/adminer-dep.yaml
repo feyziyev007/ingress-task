@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my-chart.fullname" . }}-adminer-deployment
+spec:
+  replicas: {{ .Values.services.ms10demo1.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "my-chart.fullname" . }}-adminer
+  template:
+    metadata:
+      labels:
+        app: {{ include "my-chart.fullname" . }}-adminer
+    spec:
+      containers:
+        - name: {{ include "my-chart.fullname" . }}-adminer
+          image: {{ .Values.services.adminer.image }}
+          ports:
+            - containerPort: {{ .Values.services.adminer.containerPort }}

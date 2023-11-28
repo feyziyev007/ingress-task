@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "my-chart.fullname" . }}-ms10-security-service
+spec:
+  selector:
+    app: {{ include "my-chart.fullname" . }}-ms10-security
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: {{ .Values.services.ms10security.port }}
+      targetPort: {{ .Values.services.ms10security.targetPort }}

@@ -1,0 +1,122 @@
+# Default values for my-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+services:
+  ms10demo1:
+    replicaCount: 1
+    port: '80'
+    targetPort: '8080'
+    containerPort: '8080'
+    image: feyziyev007/ms10-demo1
+    limits:
+      memory: 1000M
+  ms10security:
+    replicaCount: 1
+    port: '80'
+    targetPort: '8080'
+    containerPort: '8080'
+    image: feyziyev007/ms10-sec
+    datasource:
+      url: "jdbc:mysql://mysql-service:3306/"
+      username: "root"
+      password: "password"
+    limits:
+      memory: 1000M
+  adminer:
+    replicaCount: 1
+    port: '8080'
+    targetPort: '8080'
+    containerPort: '8080'
+    image: adminer
+    limits:
+      memory: 1000M
+  db:
+    replicaCount: 1
+    port: '3306'
+    targetPort: '3306'
+    containerPort: '3306'
+    image: mysql:8.0.23
+    rootPassword: "password"
+    user: "azar"
+    password: "password"
+    limits:
+      memory: 1000M
+
+ingress:
+  host1: suruculuk.cloud
+  host2: login.suruculuk.cloud
+  port1: 80
+  port2: 80
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Automatically mount a ServiceAccount's API credentials?
+  automount: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# Additional volumes on the output Deployment definition.
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
