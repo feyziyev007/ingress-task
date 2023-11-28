@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "my-chart.fullname" . }}-mysql-deployment
+  name: mysql-deployment
 spec:
   replicas: {{ .Values.services.db.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "my-chart.fullname" . }}-db
+      app: db
   template:
     metadata:
       labels:
-        app: {{ include "my-chart.fullname" . }}-db
+        app: db
     spec:
       containers:
-        - name: {{ include "my-chart.fullname" . }}-db
+        - name: db
           image: {{ .Values.services.db.image }}
           env:
             - name: MYSQL_ROOT_PASSWORD
